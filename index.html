@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<meta name="theme-color" content="#050b24">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="FitRPG">
+<link rel="apple-touch-icon" href="assets/icon-192.png">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="assets/icon-192.png">
+<title>FitRPG</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="app">
+
+  <!-- BANNER DE INSTALAÇÃO PWA -->
+  <div id="pwaBanner" class="pwa-banner" hidden>
+    <div class="pwa-info">
+      <img src="assets/icon-192.png" alt="FitRPG" class="pwa-icon">
+      <div>
+        <b>Instalar FitRPG</b>
+        <small>Adicione à tela inicial para usar sem navegador</small>
+      </div>
+    </div>
+    <button id="pwaInstallBtn" class="btn gold">📲 INSTALAR APP</button>
+  </div>
+
+  <!-- ONBOARDING -->
+  <section id="onboard" hidden>
+    <div class="ob-hero"><img src="assets/av1.png" alt=""><img src="assets/av4.png" alt=""><img src="assets/av7.png" alt=""><img src="assets/av10.png" alt=""></div>
+    <h1 class="logo">FIT<span>RPG</span></h1>
+    <p class="muted center">Seu corpo real é o personagem. Cada quilo perdido evolui seu herói.</p>
+    <form id="obForm" autocomplete="off">
+      <label>Nome do Herói<input id="obName" required maxlength="20" placeholder="Ex: Erick"></label>
+      <div class="row2">
+        <label>Peso Atual (kg)<input id="obWeight" type="number" step="0.1" min="30" max="300" required placeholder="105.0"></label>
+        <label>Meta Ideal (kg)<input id="obGoal" type="number" step="0.1" min="30" max="300" required placeholder="80.0"></label>
+      </div>
+      <label>Nível de Condicionamento Inicial</label>
+      <div class="opts" id="obLevels"></div>
+      <label>Classe Inicial de Mobilidade</label>
+      <div class="opts" id="obClass">
+        <label class="opt"><input type="radio" name="cls" value="walker" checked><div><b>🥾 Andarilho</b><small>Começa a pé. Bicicleta 🔒 até acumular 5 km ou 60 min de caminhada (ou pela Skill).</small></div></label>
+        <label class="opt"><input type="radio" name="cls" value="cyclist"><div><b>🚲 Ciclista</b><small>Baixo impacto articular. Caminhada e Bicicleta liberadas desde o Dia 1.</small></div></label>
+      </div>
+      <label>Horário de virada das Missões Diárias<input id="obRoll" type="time" value="00:00" required></label>
+      <p id="obErr" class="err"></p>
+      <button class="btn primary big" type="submit">🚀 INICIAR JORNADA</button>
+    </form>
+  </section>
+
+  <!-- JOGO -->
+  <main id="game" hidden>
+    <header class="hud">
+      <div class="bar title"><span class="crown">👑</span><b id="hTitle"></b><span id="hRank" class="rank">E</span></div>
+      <div class="bar hp"><span class="ic">❤️</span><label>HP</label><div class="track"><i id="hpFill"></i></div><em id="hpTxt"></em></div>
+      <div class="bar xp"><span class="ic">⭐</span><label id="xpLbl">XP</label><div class="track"><i id="xpFill"></i></div><em id="xpTxt"></em></div>
+      <div class="bar wt" id="bossBar" style="cursor:pointer" title="Toque para enfrentar o Boss Balança"><span class="ic">⚖️</span><label>BOSS</label><div class="track"><i id="wtFill"></i></div><em id="wtTxt"></em></div>
+
+      <div id="stage">
+        <div class="sky"></div><div class="cloud c1"></div><div class="cloud c2"></div>
+        <div class="far"></div><div class="falls"></div>
+        <div class="trees"></div>
+        <canvas id="fx"></canvas>
+        <div class="ground"><div class="stones"></div></div>
+        <div class="banner">💧</div>
+        <div id="auraGlow"></div>
+        <div id="ring"><i></i><i></i></div>
+        <div id="summon"><i></i><i></i><i></i></div>
+        <div id="avWrap"><img id="avatar" alt="Avatar"><div id="avSweat"></div></div>
+        <div id="phaseTag"></div>
+      </div>
+
+      <div class="chips">
+        <div class="chip">💰 <b id="cGold">0</b></div>
+        <div class="chip">🔥 <b id="cStreak">0</b> dias</div>
+        <div class="chip" id="cWeight">⚖️</div>
+        <div class="chip" id="cClass"></div>
+      </div>
+    </header>
+
+    <nav class="tabs">
+      <button data-tab="missions" class="on">⚔️ Missões Diárias</button>
+      <button data-tab="shop">🛒 Loja &amp; Skills</button>
+      <button data-tab="trophies">🏆 Sala de Troféus</button>
+    </nav>
+
+    <section id="tab-missions" class="tab"></section>
+    <section id="tab-shop" class="tab" hidden></section>
+    <section id="tab-trophies" class="tab" hidden></section>
+  </main>
+
+  <div id="toasts"></div>
+</div>
+<script src="app.js"></script>
+<script src="app2.js"></script>
+</body>
+</html>
