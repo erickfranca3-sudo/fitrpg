@@ -100,16 +100,7 @@ const WL_BADGE = '<div class="wl-badge" hidden style="font-size:.75rem;color:#4a
 
 function toast(msg) {
   const d = document.createElement('div'); d.className = 'toast'; d.textContent = msg;
-  h += `<div class="sec">💾 BACKUP & DADOS</div>
-    <div class="card" style="flex-direction:column;align-items:stretch">
-      <b>Backup do Progresso</b>
-      <small class="muted" style="margin-bottom:8px">Exporte seu progresso para não perder seu herói ou transfira para outro celular/link.</small>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px">
-        <button class="btn gold" data-act="export">📤 EXPORTAR</button>
-        <button class="btn" data-act="import">📥 IMPORTAR</button>
-      </div>
-    </div>`;
-  $('#tab-shop').innerHTML = h;'#toasts').appendChild(d); setTimeout(() => d.remove(), 3500);
+  $('#toasts').appendChild(d); setTimeout(() => d.remove(), 3500);
 }
 function floaty(text, color, off = 0, big = false) {
   const st = $('#stage'); if (!st) return;
@@ -295,122 +286,23 @@ function commit() {
 }
 function render() {
   const h = S.hero, ph = phaseNum(), pct = weightPct(), need = lvlNeed(S.lvl);
-  h += `<div class="sec">💾 BACKUP & DADOS</div>
-    <div class="card" style="flex-direction:column;align-items:stretch">
-      <b>Backup do Progresso</b>
-      <small class="muted" style="margin-bottom:8px">Exporte seu progresso para não perder seu herói ou transfira para outro celular/link.</small>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px">
-        <button class="btn gold" data-act="export">📤 EXPORTAR</button>
-        <button class="btn" data-act="import">📥 IMPORTAR</button>
-      </div>
-    </div>`;
-  $('#tab-shop').innerHTML = h;'#hTitle').textContent = `${PHASE_NAME[ph]} ${h.name} • Nv. ${S.lvl}`;
-  h += `<div class="sec">💾 BACKUP & DADOS</div>
-    <div class="card" style="flex-direction:column;align-items:stretch">
-      <b>Backup do Progresso</b>
-      <small class="muted" style="margin-bottom:8px">Exporte seu progresso para não perder seu herói ou transfira para outro celular/link.</small>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px">
-        <button class="btn gold" data-act="export">📤 EXPORTAR</button>
-        <button class="btn" data-act="import">📥 IMPORTAR</button>
-      </div>
-    </div>`;
-  $('#tab-shop').innerHTML = h;'#hRank').textContent = 'Rank ' + rankOf(S.lvl);
-  h += `<div class="sec">💾 BACKUP & DADOS</div>
-    <div class="card" style="flex-direction:column;align-items:stretch">
-      <b>Backup do Progresso</b>
-      <small class="muted" style="margin-bottom:8px">Exporte seu progresso para não perder seu herói ou transfira para outro celular/link.</small>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px">
-        <button class="btn gold" data-act="export">📤 EXPORTAR</button>
-        <button class="btn" data-act="import">📥 IMPORTAR</button>
-      </div>
-    </div>`;
-  $('#tab-shop').innerHTML = h;'#hpFill').style.width = (S.hp / maxHp() * 100) + '%'; $('#hpTxt').textContent = `${S.hp} / ${maxHp()}`;
-  h += `<div class="sec">💾 BACKUP & DADOS</div>
-    <div class="card" style="flex-direction:column;align-items:stretch">
-      <b>Backup do Progresso</b>
-      <small class="muted" style="margin-bottom:8px">Exporte seu progresso para não perder seu herói ou transfira para outro celular/link.</small>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px">
-        <button class="btn gold" data-act="export">📤 EXPORTAR</button>
-        <button class="btn" data-act="import">📥 IMPORTAR</button>
-      </div>
-    </div>`;
-  $('#tab-shop').innerHTML = h;'#xpFill').style.width = (S.xp / need * 100) + '%'; $('#xpTxt').textContent = `${Math.floor(S.xp)} / ${need}`;
-  h += `<div class="sec">💾 BACKUP & DADOS</div>
-    <div class="card" style="flex-direction:column;align-items:stretch">
-      <b>Backup do Progresso</b>
-      <small class="muted" style="margin-bottom:8px">Exporte seu progresso para não perder seu herói ou transfira para outro celular/link.</small>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px">
-        <button class="btn gold" data-act="export">📤 EXPORTAR</button>
-        <button class="btn" data-act="import">📥 IMPORTAR</button>
-      </div>
-    </div>`;
-  $('#tab-shop').innerHTML = h;'#wtFill').style.width = pct + '%'; $('#wtTxt').textContent = `Boss HP: ${r1(Math.max(0, h.weight - h.goal))} kg`;
-  h += `<div class="sec">💾 BACKUP & DADOS</div>
-    <div class="card" style="flex-direction:column;align-items:stretch">
-      <b>Backup do Progresso</b>
-      <small class="muted" style="margin-bottom:8px">Exporte seu progresso para não perder seu herói ou transfira para outro celular/link.</small>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px">
-        <button class="btn gold" data-act="export">📤 EXPORTAR</button>
-        <button class="btn" data-act="import">📥 IMPORTAR</button>
-      </div>
-    </div>`;
-  $('#tab-shop').innerHTML = h;'#cGold').textContent = fnum(S.gold); $('#cStreak').textContent = S.streak;
-  h += `<div class="sec">💾 BACKUP & DADOS</div>
-    <div class="card" style="flex-direction:column;align-items:stretch">
-      <b>Backup do Progresso</b>
-      <small class="muted" style="margin-bottom:8px">Exporte seu progresso para não perder seu herói ou transfira para outro celular/link.</small>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px">
-        <button class="btn gold" data-act="export">📤 EXPORTAR</button>
-        <button class="btn" data-act="import">📥 IMPORTAR</button>
-      </div>
-    </div>`;
-  $('#tab-shop').innerHTML = h;'#cWeight').textContent = `⚖️ ${r1(h.weight)} kg (Boss: -${r1(Math.max(0, h.weight - h.goal))} kg)`;
-  h += `<div class="sec">💾 BACKUP & DADOS</div>
-    <div class="card" style="flex-direction:column;align-items:stretch">
-      <b>Backup do Progresso</b>
-      <small class="muted" style="margin-bottom:8px">Exporte seu progresso para não perder seu herói ou transfira para outro celular/link.</small>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px">
-        <button class="btn gold" data-act="export">📤 EXPORTAR</button>
-        <button class="btn" data-act="import">📥 IMPORTAR</button>
-      </div>
-    </div>`;
-  $('#tab-shop').innerHTML = h;'#cClass').textContent = (h.cls === 'cyclist' ? '🚲 Ciclista' : '🥾 Andarilho') + ' • ' + COND[h.level].n;
+  $('#hTitle').textContent = `${PHASE_NAME[ph]} ${h.name} • Nv. ${S.lvl}`;
+  $('#hRank').textContent = 'Rank ' + rankOf(S.lvl);
+  $('#hpFill').style.width = (S.hp / maxHp() * 100) + '%'; $('#hpTxt').textContent = `${S.hp} / ${maxHp()}`;
+  $('#xpFill').style.width = (S.xp / need * 100) + '%'; $('#xpTxt').textContent = `${Math.floor(S.xp)} / ${need}`;
+  $('#wtFill').style.width = pct + '%'; $('#wtTxt').textContent = `Boss HP: ${r1(Math.max(0, h.weight - h.goal))} kg`;
+  $('#cGold').textContent = fnum(S.gold); $('#cStreak').textContent = S.streak;
+  $('#cWeight').textContent = `⚖️ ${r1(h.weight)} kg (Boss: -${r1(Math.max(0, h.weight - h.goal))} kg)`;
+  $('#cClass').textContent = (h.cls === 'cyclist' ? '🚲 Ciclista' : '🥾 Andarilho') + ' • ' + COND[h.level].n;
   const col = auraOf(S.streak), si = spriteIdx();
   const src = `assets/av${si + 1}.png`;
   if (curSprite !== src) { const im = $('#avatar'); if (curSprite) { im.style.opacity = 0; setTimeout(() => { im.src = src; im.style.opacity = 1; }, 250); } else im.src = src; curSprite = src; }
   const g = $('#auraGlow');
   g.style.opacity = col ? 1 : 0;
   if (col) { g.style.background = `radial-gradient(circle,${col}88 0,${col}33 45%,transparent 70%)`; g.style.animation = 'ring 1.8s ease-in-out infinite'; }
-  h += `<div class="sec">💾 BACKUP & DADOS</div>
-    <div class="card" style="flex-direction:column;align-items:stretch">
-      <b>Backup do Progresso</b>
-      <small class="muted" style="margin-bottom:8px">Exporte seu progresso para não perder seu herói ou transfira para outro celular/link.</small>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px">
-        <button class="btn gold" data-act="export">📤 EXPORTAR</button>
-        <button class="btn" data-act="import">📥 IMPORTAR</button>
-      </div>
-    </div>`;
-  $('#tab-shop').innerHTML = h;'#ring').querySelectorAll('i').forEach(i => { i.style.borderColor = col || '#00d2ff'; i.style.boxShadow = `0 0 18px ${col || '#00d2ff'},inset 0 0 18px ${col || '#00d2ff'}`; });
-  h += `<div class="sec">💾 BACKUP & DADOS</div>
-    <div class="card" style="flex-direction:column;align-items:stretch">
-      <b>Backup do Progresso</b>
-      <small class="muted" style="margin-bottom:8px">Exporte seu progresso para não perder seu herói ou transfira para outro celular/link.</small>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px">
-        <button class="btn gold" data-act="export">📤 EXPORTAR</button>
-        <button class="btn" data-act="import">📥 IMPORTAR</button>
-      </div>
-    </div>`;
-  $('#tab-shop').innerHTML = h;'#phaseTag').textContent = `${PHASE_NAME[ph].toUpperCase()}${col ? ' • AURA ' + (S.streak >= 30 ? 'OURO' : S.streak >= 15 ? 'SOMBRIA' : 'ELÉTRICA') : ''}`;
-  h += `<div class="sec">💾 BACKUP & DADOS</div>
-    <div class="card" style="flex-direction:column;align-items:stretch">
-      <b>Backup do Progresso</b>
-      <small class="muted" style="margin-bottom:8px">Exporte seu progresso para não perder seu herói ou transfira para outro celular/link.</small>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px">
-        <button class="btn gold" data-act="export">📤 EXPORTAR</button>
-        <button class="btn" data-act="import">📥 IMPORTAR</button>
-      </div>
-    </div>`;
-  $('#tab-shop').innerHTML = h;'#avWrap').classList.toggle('won', !!(S.day && S.day.done1 && S.day.done2));
+  $('#ring').querySelectorAll('i').forEach(i => { i.style.borderColor = col || '#00d2ff'; i.style.boxShadow = `0 0 18px ${col || '#00d2ff'},inset 0 0 18px ${col || '#00d2ff'}`; });
+  $('#phaseTag').textContent = `${PHASE_NAME[ph].toUpperCase()}${col ? ' • AURA ' + (S.streak >= 30 ? 'OURO' : S.streak >= 15 ? 'SOMBRIA' : 'ELÉTRICA') : ''}`;
+  $('#avWrap').classList.toggle('won', !!(S.day && S.day.done1 && S.day.done2));
   renderMissions(); renderShop(); renderTrophies();
 }
 
@@ -502,7 +394,7 @@ function renderShop() {
         <button class="btn" data-act="import">📥 IMPORTAR</button>
       </div>
     </div>`;
-  $('#tab-shop').innerHTML = h;'#tab-shop').innerHTML = h;
+  $('#tab-shop').innerHTML = h;
 }
 const RAR = { bronze: ['Bronze', '#cd7f32'], prata: ['Prata', '#cfd8e3'], ouro: ['Ouro', '#facc15'], platina: ['Platina', '#7ff0ff'], mitica: ['Mítica', '#ff4df0'] };
 function renderTrophies() {
@@ -513,16 +405,7 @@ function renderTrophies() {
     if (S.tr[id]) h += `<div class="tro r-${t.r}"><div class="ic">${t.i}</div><b>${t.n}</b><div class="rar" style="color:${RAR[t.r][1]}">${RAR[t.r][0]}</div><small>${t.d}</small></div>`;
     else h += `<div class="tro lock"><div class="ic">🔒</div><b>🔒 Conquista Secreta #${num}</b><small>??? (Continue treinando e superando seus limites para descobrir este segredo)</small></div>`;
   });
-  h += `<div class="sec">💾 BACKUP & DADOS</div>
-    <div class="card" style="flex-direction:column;align-items:stretch">
-      <b>Backup do Progresso</b>
-      <small class="muted" style="margin-bottom:8px">Exporte seu progresso para não perder seu herói ou transfira para outro celular/link.</small>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px">
-        <button class="btn gold" data-act="export">📤 EXPORTAR</button>
-        <button class="btn" data-act="import">📥 IMPORTAR</button>
-      </div>
-    </div>`;
-  $('#tab-shop').innerHTML = h;'#tab-trophies').innerHTML = h + '</div>';
+  $('#tab-trophies').innerHTML = h + '</div>';
 }
 
 /* ---------- Modais gerais ---------- */
@@ -889,26 +772,8 @@ function openWeigh() {
 
 /* ===================== Início / Onboarding ===================== */
 function buildOnboard() {
-  h += `<div class="sec">💾 BACKUP & DADOS</div>
-    <div class="card" style="flex-direction:column;align-items:stretch">
-      <b>Backup do Progresso</b>
-      <small class="muted" style="margin-bottom:8px">Exporte seu progresso para não perder seu herói ou transfira para outro celular/link.</small>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px">
-        <button class="btn gold" data-act="export">📤 EXPORTAR</button>
-        <button class="btn" data-act="import">📥 IMPORTAR</button>
-      </div>
-    </div>`;
-  $('#tab-shop').innerHTML = h;'#obLevels').innerHTML = [1, 2, 3, 4, 5].map(n => `<label class="opt"><input type="radio" name="lv" value="${n}" ${n === 1 ? 'checked' : ''}><div><b>Nível ${n}: ${COND[n].n}</b><small>${COND[n].d} • Meta base de Cardio: ${COND[n].km.toFixed(1)} km</small></div></label>`).join('');
-  h += `<div class="sec">💾 BACKUP & DADOS</div>
-    <div class="card" style="flex-direction:column;align-items:stretch">
-      <b>Backup do Progresso</b>
-      <small class="muted" style="margin-bottom:8px">Exporte seu progresso para não perder seu herói ou transfira para outro celular/link.</small>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px">
-        <button class="btn gold" data-act="export">📤 EXPORTAR</button>
-        <button class="btn" data-act="import">📥 IMPORTAR</button>
-      </div>
-    </div>`;
-  $('#tab-shop').innerHTML = h;'#obForm').onsubmit = e => {
+  $('#obLevels').innerHTML = [1, 2, 3, 4, 5].map(n => `<label class="opt"><input type="radio" name="lv" value="${n}" ${n === 1 ? 'checked' : ''}><div><b>Nível ${n}: ${COND[n].n}</b><small>${COND[n].d} • Meta base de Cardio: ${COND[n].km.toFixed(1)} km</small></div></label>`).join('');
+  $('#obForm').onsubmit = e => {
     e.preventDefault();
     const w = r1(parseFloat($('#obWeight').value)), g = r1(parseFloat($('#obGoal').value));
     if (!(g < w)) { $('#obErr').textContent = 'A meta ideal precisa ser menor que o peso atual.'; return; }
@@ -918,32 +783,14 @@ function buildOnboard() {
 }
 let started = false;
 function startGame() {
-  h += `<div class="sec">💾 BACKUP & DADOS</div>
-    <div class="card" style="flex-direction:column;align-items:stretch">
-      <b>Backup do Progresso</b>
-      <small class="muted" style="margin-bottom:8px">Exporte seu progresso para não perder seu herói ou transfira para outro celular/link.</small>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px">
-        <button class="btn gold" data-act="export">📤 EXPORTAR</button>
-        <button class="btn" data-act="import">📥 IMPORTAR</button>
-      </div>
-    </div>`;
-  $('#tab-shop').innerHTML = h;'#onboard').hidden = true; $('#game').hidden = false;
+  $('#onboard').hidden = true; $('#game').hidden = false;
   if (!started) {
     started = true; fxInit(); idleStart();
     document.querySelectorAll('.tabs button').forEach(b => b.onclick = () => {
       document.querySelectorAll('.tabs button').forEach(x => x.classList.toggle('on', x === b));
       document.querySelectorAll('.tab').forEach(t => t.hidden = t.id !== 'tab-' + b.dataset.tab); sfx.click();
     });
-    h += `<div class="sec">💾 BACKUP & DADOS</div>
-    <div class="card" style="flex-direction:column;align-items:stretch">
-      <b>Backup do Progresso</b>
-      <small class="muted" style="margin-bottom:8px">Exporte seu progresso para não perder seu herói ou transfira para outro celular/link.</small>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px">
-        <button class="btn gold" data-act="export">📤 EXPORTAR</button>
-        <button class="btn" data-act="import">📥 IMPORTAR</button>
-      </div>
-    </div>`;
-  $('#tab-shop').innerHTML = h;'#tab-missions').addEventListener('click', e => {
+    $('#tab-missions').addEventListener('click', e => {
       const b = e.target.closest('[data-act]'); if (!b || b.disabled) return; ac();
       const a = b.dataset.act;
       if (a === 'water') addWater(+b.dataset.ml);
@@ -952,16 +799,7 @@ function startGame() {
       else if (a === 'rest') activateRest();
       else if (a === 'weigh') openWeigh();
     });
-    h += `<div class="sec">💾 BACKUP & DADOS</div>
-    <div class="card" style="flex-direction:column;align-items:stretch">
-      <b>Backup do Progresso</b>
-      <small class="muted" style="margin-bottom:8px">Exporte seu progresso para não perder seu herói ou transfira para outro celular/link.</small>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px">
-        <button class="btn gold" data-act="export">📤 EXPORTAR</button>
-        <button class="btn" data-act="import">📥 IMPORTAR</button>
-      </div>
-    </div>`;
-  $('#tab-shop').innerHTML = h;'#tab-shop').addEventListener('click', e => {
+    $('#tab-shop').addEventListener('click', e => {
       const b = e.target.closest('[data-act]'); if (!b || b.disabled) return; ac();
       if (b.dataset.act === 'skill') buySkill(b.dataset.id);
       else if (b.dataset.act === 'buy') buyItem(b.dataset.id);
@@ -980,6 +818,7 @@ function startGame() {
   if (S.day.key !== k) toast('🌅 Novo dia, novas missões!');
   if (weighDue() && !S.dead) setTimeout(() => { toast('⚖️ Pesagem Surpresa convocada!'); openWeigh(); }, 900);
 }
+
 /* ===================== Suporte a Instalação PWA ===================== */
 let deferredPrompt = null;
 const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
@@ -1047,8 +886,8 @@ function initPwaInstall() {
 function openExportModal() {
   const json = JSON.stringify(S);
   const M = modal(`<h2>📤 Exportar Progresso</h2>
-    <p class="muted">Copie o código abaixo ou baixe o arquivo para transferir seu jogo!</p>
-    <textarea id="expTxt" readonly style="width:100%;height:130px;background:#050b24;color:var(--cy);border:1px solid #1f3a8a;border-radius:8px;padding:8px;font-family:monospace;font-size:.75rem;word-break:break-all"></textarea>
+    <p class="muted">Copie o código abaixo ou baixe o arquivo para restaurar seu jogo em qualquer lugar!</p>
+    <textarea id="expTxt" readonly style="width:100%;height:140px;background:#050b24;color:var(--cy);border:1px solid #1f3a8a;border-radius:8px;padding:8px;font-family:monospace;font-size:.75rem;word-break:break-all"></textarea>
     <div style="display:grid;gap:8px;margin-top:10px">
       <button class="btn gold" id="btnCopy">📋 COPIAR CÓDIGO</button>
       <button class="btn primary" id="btnDownload">💾 BAIXAR ARQUIVO (.fitrpg)</button>
@@ -1056,14 +895,6 @@ function openExportModal() {
     <div style="margin-top:14px;padding:10px;background:#07123a;border-radius:10px;border:1px solid #1d4fd8;text-align:left">
       <b style="color:var(--cy);font-size:.85rem">💡 Quer resgatar de um link antigo?</b>
       <p style="font-size:.75rem;color:var(--mu);margin:4px 0">No app antigo, toque 5 vezes seguidas no título do seu herói no topo para copiar o código automaticamente!</p>
-    </div>`, { cls: 'trophy' });
-  const json = JSON.stringify(S);
-  const M = modal(`<h2>📤 Exportar Progresso</h2>
-    <p class="muted">Copie o código abaixo ou baixe o arquivo para restaurar seu jogo em qualquer lugar!</p>
-    <textarea id="expTxt" readonly style="width:100%;height:140px;background:#050b24;color:var(--cy);border:1px solid #1f3a8a;border-radius:8px;padding:8px;font-family:monospace;font-size:.75rem;word-break:break-all"></textarea>
-    <div style="display:grid;gap:8px;margin-top:10px">
-      <button class="btn gold" id="btnCopy">📋 COPIAR CÓDIGO</button>
-      <button class="btn primary" id="btnDownload">💾 BAIXAR ARQUIVO (.fitrpg)</button>
     </div>`, { cls: 'trophy' });
   const ta = M.body.querySelector('#expTxt');
   ta.value = json;
