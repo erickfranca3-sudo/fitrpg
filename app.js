@@ -363,7 +363,7 @@ function applyWeigh(kg, photo) {
   } else {
     toast(`⚖️ Balança confirmada: ${kg} kg. O confronto continua!`);
   }
-  S.nextWeigh = daysToKey(keyToDays(gameKey()) + rnd(7, 14));
+  S.nextWeigh = daysToKey(keyToDays(gameKey()) + rnd(14, 21));
   if (spriteIdx() !== before) pendingFx.push('evolve');
   commit();
 }

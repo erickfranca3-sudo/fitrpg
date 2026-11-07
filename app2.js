@@ -1,4 +1,4 @@
-﻿
+
 /* ===================== UI: som, efeitos, modais ===================== */
 const vib = p => { try { navigator.vibrate && navigator.vibrate(p); } catch (e) { } };
 let AC = null;
@@ -292,7 +292,8 @@ function render() {
   $('#xpFill').style.width = (S.xp / need * 100) + '%'; $('#xpTxt').textContent = `${Math.floor(S.xp)} / ${need}`;
   $('#wtFill').style.width = pct + '%'; $('#wtTxt').textContent = `Boss HP: ${r1(Math.max(0, h.weight - h.goal))} kg`;
   $('#cGold').textContent = fnum(S.gold); $('#cStreak').textContent = S.streak;
-  $('#cWeight').textContent = `⚖️ ${r1(h.weight)} kg (Boss: -${r1(Math.max(0, h.weight - h.goal))} kg)`;
+  $('#cWeight').textContent = `⚖️ ${r1(h.weight)} kg (Meta: -${r1(Math.max(0, h.weight - h.goal))} kg)`;
+  $('#bossBar').hidden = !(weighDue() && !S.dead);
   $('#cClass').textContent = (h.cls === 'cyclist' ? '🚲 Ciclista' : '🥾 Andarilho') + ' • ' + COND[h.level].n;
   const col = auraOf(S.streak), si = spriteIdx();
   const src = `assets/av${si + 1}.png`;
@@ -309,9 +310,7 @@ function render() {
 function renderMissions() {
   const d = S.day, m = d.m2, el = $('#tab-missions');
   const wp = Math.min(100, d.water / d.waterGoal * 100);
-  const bossHp = r1(Math.max(0, S.hero.weight - S.hero.goal));
   const isDue = weighDue();
-  const daysLeft = S.nextWeigh ? Math.max(0, keyToDays(S.nextWeigh) - keyToDays(gameKey())) : 7;
   let h = '';
 
   // Card do Boss Balança (Guardião da Balança)
@@ -323,16 +322,6 @@ function renderMissions() {
         <div class="muted">O Guardião da Balança convocou a Pesagem Oficial! Fotografe o visor e golpeie o Boss com OCR.</div>
       </div>
       <button class="btn gold" data-act="weigh">⚔️ BATALHAR</button>
-    </div>`;
-  } else {
-    h += `<div class="card boss-card">
-      <div class="ic" style="font-size:2.2rem">⚖️</div>
-      <div class="tx">
-        <b style="color:#c084fc">👹 RAID BOSS: GUARDIÃO DA BALANÇA</b>
-        <small>HP do Boss: <b style="color:#facc15">${bossHp} kg</b> até a meta ideal</small>
-        <small class="muted">👁️ Espreitando nas sombras • Emboscada surpresa em ~${daysLeft} dia${daysLeft === 1 ? '' : 's'}</small>
-      </div>
-      <button class="btn" style="border-color:#a855f7;box-shadow:0 0 10px #a855f755" data-act="weigh">⚔️ DESAFIAR</button>
     </div>`;
   }
 
@@ -385,15 +374,6 @@ function renderShop() {
     h += `<div class="sec">🎫 TICKETS RESGATADOS</div>`;
     S.tickets.slice().reverse().forEach(t => { h += `<div class="ticket">🎫 ${esc(t.n)}<br><small>${new Date(t.at).toLocaleString('pt-BR')}</small></div>`; });
   }
-  h += `<div class="sec">💾 BACKUP & DADOS</div>
-    <div class="card" style="flex-direction:column;align-items:stretch">
-      <b>Backup do Progresso</b>
-      <small class="muted" style="margin-bottom:8px">Exporte seu progresso para não perder seu herói ou transfira para outro celular/link.</small>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px">
-        <button class="btn gold" data-act="export">📤 EXPORTAR</button>
-        <button class="btn" data-act="import">📥 IMPORTAR</button>
-      </div>
-    </div>`;
   $('#tab-shop').innerHTML = h;
 }
 const RAR = { bronze: ['Bronze', '#cd7f32'], prata: ['Prata', '#cfd8e3'], ouro: ['Ouro', '#facc15'], platina: ['Platina', '#7ff0ff'], mitica: ['Mítica', '#ff4df0'] };
@@ -778,7 +758,7 @@ function buildOnboard() {
     const w = r1(parseFloat($('#obWeight').value)), g = r1(parseFloat($('#obGoal').value));
     if (!(g < w)) { $('#obErr').textContent = 'A meta ideal precisa ser menor que o peso atual.'; return; }
     const h = { name: $('#obName').value.trim() || 'Herói', weight: w, startWeight: w, goal: g, level: +document.querySelector('input[name=lv]:checked').value, cls: document.querySelector('input[name=cls]:checked').value, rollover: $('#obRoll').value || '00:00' };
-    S = freshState(h); S.nextWeigh = daysToKey(keyToDays(gameKey()) + rnd(7, 14)); rollover(); save(); ac(); startGame();
+    S = freshState(h); S.nextWeigh = daysToKey(keyToDays(gameKey()) + rnd(14, 21)); rollover(); save(); ac(); startGame();
   };
 }
 let started = false;
@@ -804,8 +784,6 @@ function startGame() {
       if (b.dataset.act === 'skill') buySkill(b.dataset.id);
       else if (b.dataset.act === 'buy') buyItem(b.dataset.id);
       else if (b.dataset.act === 'usepotion') usePotion();
-      else if (b.dataset.act === 'export') openExportModal();
-      else if (b.dataset.act === 'import') openImportModal();
     });
     const bb = $('#bossBar');
     if (bb) bb.onclick = () => { ac(); openWeigh(); };
@@ -882,67 +860,3 @@ function initPwaInstall() {
   if ('serviceWorker' in navigator && location.protocol.startsWith('http')) navigator.serviceWorker.register('sw.js').catch(() => { });
 })();
 
-/* ---------- Modais de Backup (Exportar / Importar) ---------- */
-function openExportModal() {
-  const json = JSON.stringify(S);
-  const M = modal(`<h2>📤 Exportar Progresso</h2>
-    <p class="muted">Copie o código abaixo ou baixe o arquivo para restaurar seu jogo em qualquer lugar!</p>
-    <textarea id="expTxt" readonly style="width:100%;height:140px;background:#050b24;color:var(--cy);border:1px solid #1f3a8a;border-radius:8px;padding:8px;font-family:monospace;font-size:.75rem;word-break:break-all"></textarea>
-    <div style="display:grid;gap:8px;margin-top:10px">
-      <button class="btn gold" id="btnCopy">📋 COPIAR CÓDIGO</button>
-      <button class="btn primary" id="btnDownload">💾 BAIXAR ARQUIVO (.fitrpg)</button>
-    </div>
-    <div style="margin-top:14px;padding:10px;background:#07123a;border-radius:10px;border:1px solid #1d4fd8;text-align:left">
-      <b style="color:var(--cy);font-size:.85rem">💡 Quer resgatar de um link antigo?</b>
-      <p style="font-size:.75rem;color:var(--mu);margin:4px 0">No app antigo, toque 5 vezes seguidas no título do seu herói no topo para copiar o código automaticamente!</p>
-    </div>`, { cls: 'trophy' });
-  const ta = M.body.querySelector('#expTxt');
-  ta.value = json;
-  M.body.querySelector('#btnCopy').onclick = () => {
-    ta.select();
-    navigator.clipboard && navigator.clipboard.writeText ? navigator.clipboard.writeText(json).then(() => toast('✅ Código de backup copiado!')) : toast('Selecione e copie o texto');
-  };
-  M.body.querySelector('#btnDownload').onclick = () => {
-    const blob = new Blob([json], { type: 'application/json' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = `fitrpg_backup_${S.hero ? S.hero.name : 'heroi'}.fitrpg`;
-    a.click();
-    URL.revokeObjectURL(url);
-    toast('💾 Arquivo de backup baixado!');
-  };
-}
-
-function openImportModal() {
-  const M = modal(`<h2>📥 Importar Progresso</h2>
-    <p class="muted">Cole o código do seu progresso antigo ou envie o arquivo para restaurar seu herói!</p>
-    <textarea id="impTxt" placeholder="Cole o código do backup aqui..." style="width:100%;height:110px;background:#050b24;color:#fff;border:1px solid #1f3a8a;border-radius:8px;padding:8px;font-family:monospace;font-size:.75rem"></textarea>
-    <input type="file" id="impFile" accept=".json,.fitrpg,text/plain" style="margin:8px 0">
-    <button class="btn gold big" id="btnApply" style="margin-top:8px">⚡ RESTAURAR HERÓI</button>`);
-  
-  const ta = M.body.querySelector('#impTxt');
-  const fileInput = M.body.querySelector('#impFile');
-  fileInput.onchange = e => {
-    const file = e.target.files[0];
-    if (!file) return;
-    const reader = new FileReader();
-    reader.onload = ev => { ta.value = ev.target.result; };
-    reader.readAsText(file);
-  };
-
-  M.body.querySelector('#btnApply').onclick = () => {
-    try {
-      const parsed = JSON.parse(ta.value.trim());
-      if (!parsed || !parsed.hero) throw new Error('Formato inválido');
-      S = migrateState(parsed);
-      save();
-      M.close();
-      toast('🎉 Progresso restaurado com sucesso!');
-      sfx.levelUp();
-      render();
-    } catch (err) {
-      toast('⚠️ Código de backup inválido ou corrompido!');
-    }
-  };
-}
